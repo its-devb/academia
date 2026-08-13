@@ -118,6 +118,27 @@ function Contato() {
                 className="mt-8 space-y-4"
                 onSubmit={(e) => {
                   e.preventDefault();
+                  const dados = new FormData(e.currentTarget);
+                  const nome = dados.get("nome");
+                  const telefone = dados.get("telefone");
+                  const plano = dados.get("plano");
+                  const mensagem = dados.get("mensagem");
+                  const texto = [
+                    "Olá! Gostaria de agendar uma aula experimental na GL Fit.",
+                    "",
+                    `Nome: ${nome}`,
+                    `Telefone: ${telefone}`,
+                    `Plano de interesse: ${plano}`,
+                    mensagem ? `Mensagem: ${mensagem}` : "",
+                  ]
+                    .filter(Boolean)
+                    .join("\n");
+
+                  window.open(
+                    `https://wa.me/5591992410531?text=${encodeURIComponent(texto)}`,
+                    "_blank",
+                    "noopener,noreferrer",
+                  );
                   setEnviado(true);
                 }}
               >
@@ -125,6 +146,7 @@ function Contato() {
                   <input
                     required
                     type="text"
+                    name="nome"
                     placeholder="Seu nome"
                     className="w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-brand-red focus:outline-none"
                   />
@@ -134,6 +156,7 @@ function Contato() {
                     <input
                       required
                       type="tel"
+                      name="telefone"
                       placeholder="(91) 90000-0000"
                       className="w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-brand-red focus:outline-none"
                     />
@@ -142,13 +165,14 @@ function Contato() {
                     <select
                       className="w-full rounded-md border border-input bg-background px-4 py-3 text-foreground focus:border-brand-red focus:outline-none"
                       defaultValue=""
+                      name="plano"
                     >
                       <option value="" disabled>
                         Selecione
                       </option>
-                      <option>Mensal</option>
-                      <option>Anual</option>
-                      <option>GL Bike</option>
+                      <option>GL Master</option>
+                      <option>GL Plus</option>
+                      <option>GL Start</option>
                       <option>Só a aula grátis</option>
                     </select>
                   </Field>
@@ -156,6 +180,7 @@ function Contato() {
                 <Field label="Mensagem (opcional)">
                   <textarea
                     rows={4}
+                    name="mensagem"
                     placeholder="Horário preferido, dúvidas..."
                     className="w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-brand-red focus:outline-none"
                   />

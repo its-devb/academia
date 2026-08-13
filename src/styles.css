@@ -1,6 +1,6 @@
 @import "tailwindcss" source(none);
-@source "../src";
 @import "tw-animate-css";
+@source "../src";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -75,7 +75,7 @@
   --accent: var(--brand-yellow);
   --accent-foreground: oklch(0.16 0.004 264);
 
-  --brand-black: oklch(0.145 0.004 264);
+  --brand-black: var(--background);
 
   /* Gradient / glow */
   --gradient-brand: linear-gradient(
@@ -85,16 +85,14 @@
   );
   --gradient-brand-soft: linear-gradient(
     180deg,
-    oklch(0.57 0.24 27 / 18%) 0%,
+    color-mix(in oklab, var(--brand-red) 18%, transparent) 0%,
     transparent 60%
   );
   --shadow-glow: 0 0 60px -12px color-mix(in oklab, var(--brand-red) 55%, transparent);
   --shadow-card: 0 18px 40px -22px oklch(0 0 0 / 80%);
 }
 
-.dark {
-  /* já é dark por padrão — mantém os mesmos valores */
-}
+/* .dark herda os mesmos valores de :root — já é dark por padrão */
 
 @layer base {
   * {
@@ -137,6 +135,10 @@
 
 @utility shadow-glow {
   box-shadow: var(--shadow-glow);
+}
+
+@utility shadow-card {
+  box-shadow: var(--shadow-card);
 }
 
 @utility section-pad {
