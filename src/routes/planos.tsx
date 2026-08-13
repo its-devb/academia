@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 
 export const Route = createFileRoute("/planos")({
   head: () => ({
@@ -7,13 +8,12 @@ export const Route = createFileRoute("/planos")({
       {
         name: "description",
         content:
-          "Planos da GL Fit Academia: mensal a partir de R$ 149,90, anual com condições especiais e GL Bike por +R$ 19,90/mês. Aula experimental grátis.",
+          "Planos GL Master, GL Plus e GL Start da GL Fit Academia. Aula experimental grátis.",
       },
       { property: "og:title", content: "Planos — GL Fit Academia" },
       {
         property: "og:description",
-        content:
-          "Planos flexíveis na GL Fit Academia. Mensal, anual e GL Bike. Aula experimental grátis.",
+        content: "Conheça os planos da GL Fit Academia e seus benefícios.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -24,69 +24,104 @@ export const Route = createFileRoute("/planos")({
 
 const PLANOS = [
   {
-    nome: "Mensal",
+    nome: "GL Master",
+    tipo: "Semestral · Parcelado em 6x",
+    destaque: true,
+    preco: "139,90",
+    periodo: "por parcela",
+    total: "R$ 839,40 em até 6x",
+    duracao: "Duração: 6 meses",
+    itens: [
+      "Sem taxa de adesão",
+      "Sem taxa de manutenção",
+      "Área de musculação e cardio",
+      "Espaço kids grátis",
+      "Atendimento premium",
+      "GL Coletivas",
+      "GL Lutas",
+      "GL Bike",
+      "GL Training",
+      "2h de estacionamento com carregador para carro elétrico grátis",
+      "Prescrição de treino grátis",
+      "Renovação de treino grátis",
+      "Cadeira de massagem",
+      "Água saborizada e gaseificada todo dia",
+      "Café suave todo dia",
+      "Bioimpedância grátis",
+      "10 convites para treino no mês",
+      "Aplicativo grátis",
+    ],
+  },
+  {
+    nome: "GL Plus",
+    tipo: "Recorrente",
     destaque: false,
     preco: "149,90",
-    periodo: "/mês",
-    desc: "Plano recorrente mensal com acesso total à estrutura.",
+    periodo: "por mês",
+    total: undefined,
+    duracao: "Recorrência mensal",
     itens: [
-      "Acesso à musculação e estrutura",
-      "Horários completos (Seg–Dom)",
-      "Sem fidelidade longa",
+      "Sem taxa de adesão",
+      "Sem taxa de manutenção",
+      "Área de musculação e cardio",
+      "Espaço kids grátis",
+      "Atendimento premium",
+      "GL Coletivas",
+      "GL Lutas",
+      "GL Training",
+      "1h30 de estacionamento com carregador para carro elétrico grátis",
+      "Prescrição de treino grátis",
+      "Renovação de treino grátis",
+      "5 convites para treino no mês",
+      "Aplicativo grátis",
     ],
   },
   {
-    nome: "Anual",
-    destaque: true,
-    preco: "119,90",
-    periodo: "/mês",
-    desc: "Melhor custo-benefício. Condições especiais em campanhas.",
-    itens: [
-      "Tudo do plano mensal",
-      "Melhor valor por mês",
-      "Prioridade em promoções",
-      "Sem reajuste durante o plano",
-    ],
-  },
-  {
-    nome: "GL Bike",
+    nome: "GL Start",
+    tipo: "Recorrente",
     destaque: false,
-    preco: "+19,90",
-    periodo: "/mês",
-    desc: "Adicione acesso ilimitado às aulas de ciclismo indoor.",
+    preco: "169,90",
+    periodo: "por mês",
+    total: undefined,
+    duracao: "Recorrência mensal",
     itens: [
-      "Aulas de pedal ilimitadas",
-      "Válido em qualquer plano",
-      "Instrutores especializados",
+      "Sem taxa de adesão",
+      "Sem taxa de manutenção",
+      "Atendimento premium",
+      "Área de musculação e cardio",
+      "GL Coletivas",
+      "GL Lutas",
+      "GL Training",
+      "Espaço kids grátis",
+      "1h30 de estacionamento com carregador para carro elétrico grátis",
+      "Prescrição de treino grátis",
+      "Renovação de treino grátis",
+      "3 convites para treino no mês",
+      "Aplicativo grátis",
     ],
   },
 ];
 
 function Planos() {
+  const [planosAbertos, setPlanosAbertos] = useState<string[]>([]);
+
+  const alternarDetalhes = (nome: string) => {
+    setPlanosAbertos((abertos) =>
+      abertos.includes(nome) ? abertos.filter((plano) => plano !== nome) : [...abertos, nome],
+    );
+  };
+
   return (
     <>
       <section className="relative isolate overflow-hidden border-b border-border/60 bg-brand-grid">
         <div className="absolute inset-0 bg-gradient-brand-soft" />
         <div className="relative mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
-          <span className="font-display text-lg tracking-widest text-brand-red">
-            PLANOS
-          </span>
+          <span className="font-display text-lg tracking-widest text-brand-red">PLANOS</span>
           <h1 className="mt-2 max-w-3xl font-display text-6xl text-white md:text-7xl">
             Escolha como treinar
           </h1>
           <p className="mt-4 max-w-xl text-lg text-muted-foreground">
-            Planos flexíveis para todo perfil. Promoções recorrentes rolando no
-            Instagram — acompanhe
-            <a
-              href="https://instagram.com/glfitacademia"
-              target="_blank"
-              rel="noreferrer"
-              className="text-brand-yellow hover:underline"
-            >
-              {" "}
-              @glfitacademia
-            </a>
-            .
+            Planos pensados para você treinar com toda a estrutura da GL Fit.
           </p>
         </div>
       </section>
@@ -94,52 +129,80 @@ function Planos() {
       <section className="section-pad bg-background">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="grid gap-6 md:grid-cols-3">
-            {PLANOS.map((plano) => (
-              <article
-                key={plano.nome}
-                className={`relative flex flex-col rounded-lg border p-8 ${
-                  plano.destaque
-                    ? "border-brand-red bg-card shadow-glow"
-                    : "border-border/60 bg-card"
-                }`}
-              >
-                {plano.destaque && (
-                  <span className="absolute -top-3 left-8 rounded-full bg-brand-red px-4 py-1 text-xs font-bold uppercase tracking-widest text-white">
-                    Mais vantagem
-                  </span>
-                )}
-                <h3 className="font-display text-4xl tracking-wide text-white">
-                  {plano.nome}
-                </h3>
-                <p className="mt-2 text-sm text-muted-foreground">{plano.desc}</p>
-                <div className="mt-6 flex items-baseline gap-1">
-                  <span className="font-display text-6xl text-brand-yellow">
-                    R$ {plano.preco}
-                  </span>
-                  <span className="text-sm font-semibold text-muted-foreground">
-                    {plano.periodo}
-                  </span>
-                </div>
-                <ul className="mt-6 space-y-3 border-t border-border/60 pt-6">
-                  {plano.itens.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-sm">
-                      <span className="mt-1 text-brand-red">✓</span>
-                      <span className="text-foreground/85">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  to="/contato"
-                  className={`mt-8 inline-flex items-center justify-center rounded-md px-6 py-3.5 text-sm font-semibold uppercase tracking-wide transition-transform hover:-translate-y-0.5 ${
+            {PLANOS.map((plano) => {
+              const detalhesAbertos = planosAbertos.includes(plano.nome);
+
+              return (
+                <article
+                  key={plano.nome}
+                  className={`relative flex flex-col rounded-lg border p-8 ${
                     plano.destaque
-                      ? "bg-brand-red text-white shadow-glow"
-                      : "border border-brand-yellow/50 text-white hover:bg-brand-yellow/10"
+                      ? "border-brand-red bg-card shadow-glow"
+                      : "border-border/60 bg-card"
                   }`}
                 >
-                  Quero esse plano
-                </Link>
-              </article>
-            ))}
+                  {plano.destaque && (
+                    <span className="absolute -top-3 left-8 rounded-full bg-brand-red px-4 py-1 text-xs font-bold uppercase tracking-widest text-white">
+                      Mais vantajoso
+                    </span>
+                  )}
+                  <p className="text-xs font-bold uppercase tracking-widest text-brand-red">
+                    {plano.tipo}
+                  </p>
+                  <h3 className="mt-2 font-display text-4xl tracking-wide text-white">
+                    {plano.nome}
+                  </h3>
+                  <div className="mt-6 flex items-baseline gap-2">
+                    <span className="text-xl font-semibold text-muted-foreground">R$</span>
+                    <span className="font-display text-6xl text-brand-yellow">{plano.preco}</span>
+                  </div>
+                  <p className="mt-1 text-sm font-semibold text-muted-foreground">
+                    {plano.periodo}
+                  </p>
+                  {plano.total && <p className="mt-2 text-sm text-foreground/85">{plano.total}</p>}
+                  <p className="mt-5 border-t border-border/60 pt-5 text-sm font-semibold text-foreground/85">
+                    {plano.duracao}
+                  </p>
+
+                  <button
+                    type="button"
+                    aria-expanded={detalhesAbertos}
+                    aria-controls={`detalhes-${plano.nome}`}
+                    onClick={() => alternarDetalhes(plano.nome)}
+                    className="mt-5 inline-flex items-center justify-between border-y border-border/60 py-4 text-left text-sm font-bold uppercase tracking-wide text-brand-yellow hover:text-white"
+                  >
+                    {detalhesAbertos ? "Ver menos" : "Ver detalhes"}
+                    <span aria-hidden="true" className="text-lg">
+                      {detalhesAbertos ? "↑" : "↓"}
+                    </span>
+                  </button>
+
+                  {detalhesAbertos && (
+                    <ul id={`detalhes-${plano.nome}`} className="mt-5 space-y-3">
+                      {plano.itens.map((item) => (
+                        <li key={item} className="flex items-start gap-3 text-sm">
+                          <span aria-hidden="true" className="mt-0.5 text-brand-red">
+                            ✓
+                          </span>
+                          <span className="text-foreground/85">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  <Link
+                    to="/contato"
+                    className={`mt-8 inline-flex items-center justify-center rounded-md px-6 py-3.5 text-sm font-semibold uppercase tracking-wide transition-transform hover:-translate-y-0.5 ${
+                      plano.destaque
+                        ? "bg-brand-red text-white shadow-glow"
+                        : "border border-brand-yellow/50 text-white hover:bg-brand-yellow/10"
+                    }`}
+                  >
+                    Eu quero
+                  </Link>
+                </article>
+              );
+            })}
           </div>
 
           <div className="mt-10 rounded-lg border border-border/60 bg-card p-6 md:p-8">
@@ -149,8 +212,7 @@ function Planos() {
                   Aula experimental 100% grátis
                 </h3>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Agende na recepção ou pelo telefone. Sem compromisso e sem
-                  custo.
+                  Agende na recepção ou pelo telefone. Sem compromisso e sem custo.
                 </p>
               </div>
               <Link
@@ -163,9 +225,8 @@ function Planos() {
           </div>
 
           <p className="mt-6 text-center text-xs text-muted-foreground">
-            * Valores estimados e podem variar conforme campanhas e promoções
-            vigentes. Confira sempre as condições atualizadas no Instagram
-            oficial.
+            * Valores e condições sujeitos a alteração. Consulte a academia para confirmar as
+            condições vigentes.
           </p>
         </div>
       </section>
